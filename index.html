@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Keiths Recipes</title>
+  <meta name="description" content="" />
+  <meta name="author" content="Keith" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" />
+
+</head>
+
+<body class="bg-gray-200">
+
+  <!-- Menu is from https://tailwindui.com -->
+  <nav class="bg-gray-800">
+    <div class="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
+      <div class="relative flex items-center justify-between h-16">
+        <div class="flex items-center px-2 lg:px-0">
+          <div class="flex-shrink-0">
+            <span class="uppercase font-black text-white inline-block">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="w-5 h-5">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />
+              </svg>
+            </span>
+            <span class="font-black text-white uppercase">Keiths Recipes</span>
+          </div>
+          <div class="hidden lg:block lg:ml-6">
+            <div class="flex space-x-4">
+              <a href="#" class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium">Home</a>
+              <a href="#"
+                class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                Inspiration
+              </a>
+              <a href="#"
+                class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                Saved Recipes
+              </a>
+              <a href="#"
+                class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                Your Basket
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="flex-1 flex justify-center px-2 lg:ml-6 lg:justify-end">
+          <div class="max-w-lg w-full lg:max-w-xs">
+            <label for="search" class="sr-only">Search</label>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <!-- Heroicon name: solid/search -->
+                <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                  fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd"
+                    d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                    clip-rule="evenodd" />
+                </svg>
+              </div>
+              <input id="search" name="search"
+                class="block w-full pl-10 pr-3 py-2 border border-transparent rounded-md leading-5 bg-gray-700 text-gray-300 placeholder-gray-400 focus:outline-none focus:bg-white focus:border-white focus:ring-white focus:text-gray-900 sm:text-sm"
+                placeholder="Search" type="search">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile menu, show/hide based on menu state. -->
+    <div class="lg:hidden" id="mobile-menu">
+      <div class="px-2 pt-2 pb-3 space-y-1">
+        <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+        <a href="#" class="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
+        <a href="#"
+          class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+          Inspiration</a>
+        <a href="#"
+          class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+          Saved Recipes</a>
+        <a href="#"
+          class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+          Your Basket</a>
+      </div>
+    </div>
+  </nav>
+
+
+
+  <div class="container mx-auto mt-4">
+    <div id="list" class="mt-4">
+      <!-- List items are inserted here -->
+    </div>
+  </div>
+
+  <script>
+
+    // Get references to the search input, clear button, and results list elements
+    const searchInput = document.querySelector('#search');
+    const resultsList = document.querySelector('#list');
+
+    // Define an array of recipe objects, each containing a name, ingredients, and steps
+    // Images from unsplash.com
+
+    const recipies = [
+      {
+        name: 'pancakes',
+        image: 'https://images.unsplash.com/photo-1528207776546-365bb710ee93?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80',
+        ingredients: ['flour', 'eggs', 'milk', 'butter', 'sugar', 'salt'],
+        steps: [
+          'Mix all ingredients',
+          'Cook on a hot pan',
+          'Serve with maple syrup'
+        ],
+        nutrients: {
+          calories: 300,
+          fat: 10,
+          carbs: 20,
+          protein: 10
+        }
+      },
+      {
+        name: 'Omelette',
+        image: 'https://images.unsplash.com/photo-1494597706938-de2cd7341979?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1808&q=80',
+        ingredients: ['eggs', 'milk', 'butter', 'salt', 'pepper'],
+        steps: [
+          'beat eggs, milk, butter, salt and pepper',
+          'preheat pan',
+          'fold omelette over',
+          'Serve with ketchup'
+        ],
+        nutrients: {
+          calories: 220,
+          fat: 0.4,
+          carbs: 3,
+          protein: 20
+        }
+      },
+      {
+        name: 'Baked Potato',
+        image: 'https://images.unsplash.com/photo-1595955545772-0d06367c140d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80',
+        ingredients: ['potato', 'butter', 'salt', 'cheese', 'pepper'],
+        steps: [
+          'Wash potato',
+          'Bake in oven',
+          'Serve with cheese and butter'
+        ],
+        nutrients: {
+          calories: 300,
+          fat: 20,
+          carbs: 40,
+          protein: 15
+        }
+      },
+      {
+        name: 'Baked Potato (Spicy)',
+        image: 'https://images.unsplash.com/photo-1603208127327-4ec6a65095b1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2532&q=80',
+        ingredients: ['potato', 'sour cream', 'butter', 'salt','pepper'],
+        steps: [
+          'Wash potato',
+          'Bake in oven',
+          'Serve with sour cream and butter'
+        ],
+        nutrients: {
+          calories: 300,
+          fat: 10,
+          carbs: 40,
+          protein: 20
+        }
+      },
+      {
+        name: 'Spaghetti',
+        image: 'https://plus.unsplash.com/premium_photo-1678897742200-85f052d33a71?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80',
+        ingredients: ['pasta', 'tomato sauce', 'salt', 'pepper'],
+        steps: [
+          'Cook pasta',
+          'Mix pasta with tomato sauce',
+          'Serve with garlic bread'
+        ],
+        nutrients: {
+          calories: 450,
+          fat: 5,
+          carbs: 70,
+          protein: 20
+        }
+      },
+      {
+        name: 'Chicken Soup',
+        image: 'https://images.unsplash.com/photo-1547592166-23ac45744acd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1771&q=80',
+        ingredients: ['chicken breast', 'chicken broth', 'potatoes', 'bread', 'carrots', 'onions', 'salt', 'pepper'],
+        steps: [
+          'slice chicken breast in half',
+          'dice carrots, onions, potatoes',
+          'pour water and chicken stock into pot',
+          'add chicken, broth, carrots, potatoes, onions',
+          'Serve with bread'
+        ],
+        nutrients: {
+          calories: 300,
+          fat: 6,
+          carbs: 40,
+          protein: 40
+        }
+      },
+      {
+        name: 'Hamburger',
+        image: 'https://images.unsplash.com/photo-1561758033-d89a9ad46330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80',
+        ingredients: ['ground beef', 'roll', 'lettuce', 'tomato', 'onion', 'ketchup', 'mustard'],
+        steps: [
+          'mix ground beef with onion into patty shape',
+          'heat pan on medium-high',
+          'cook patty until juices run clear',
+          'Assemble Hamburger with toppings',
+          'Serve with fries'
+
+        ],
+        nutrients: {
+          calories: 269,
+          fat: 30,
+          carbs: 2,
+          protein: 40
+        }
+      },
+      {
+        name: 'Pizza',
+        image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80',
+        ingredients: ['dough', 'tomato sauce', 'cheese', 'pepperoni', 'olives', 'onions'],
+        steps: [
+          'mix flour, water, yeast and nead it until firm',
+          'place in fridge in bowl for 30 minutes',
+          'roll dough flat',
+          'spread cheese and sauce over pizza dough',
+          'preheat oven',
+          'Bake in oven',
+          'Serve with garlic bread'
+        ],
+        nutrients: {
+          calories: 600,
+          fat: 23,
+          carbs: 150,
+          protein: 60
+        }
+      },
+      {
+        name: 'Tacos',
+        image: 'https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80',
+        ingredients: ['tortilla', 'ground beef', 'cheese', 'lettuce', 'tomato', 'onion', 'salsa', 'sour cream'],
+        steps: [
+          'Cook ground beef',
+          'Assemble taco',
+          'Serve with chips and salsa'
+        ],
+        nutrients: {
+          calories: 300,
+          fat: 10,
+          carbs: 20,
+          protein: 10
+        }
+      }
+    ]
+
+
+    // Add an event listener for input changes in the search input if the function handleSearchInput is called 
+    searchInput.addEventListener('input', (event) => {
+      // https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
+      // Get the search query from the input event
+      const query = event.target.value;
+
+      // If there is a query, search for recipes and display the results (we will call the searchRecipes function, and store it in the results function)
+      if (query) {
+        const results = searchRecipes(query);
+        displayResults(results);
+      } else {
+        // If there is no query, display all recipes
+        displayAllRecipes();
+      }
+    });
+
+    // Define a function to search recipes by name, case insensitive. We define the searchRecipes function and pass in the query parameter that we got from results
+	// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
+    function searchRecipes(query) {
+      return (
+        recipies.filter(recipe => recipe.name.toLowerCase().includes(query.toLowerCase()))
+      );
+    }
+
+    // Define a function to display the search results in the list
+    function displayResults(results) {
+      // Clear the current content of the results list
+      resultsList.innerHTML = '';
+
+      // Create a grid container div with the given class
+      const gridContainer = document.createElement('div');
+      gridContainer.setAttribute('class', 'grid grid-cols sm:grid-cols-2 md:grid-cols-4 gap-4');
+
+      // Iterate through each recipe in the results array
+      results.forEach(recipe => {
+        // Create a new div element to display the recipe information
+        const listItem = document.createElement('div');
+        // Set the innerHTML of the listItem with the recipe's information
+        listItem.innerHTML = `
+			<!-- Main Info -->
+          <div class="max-w-sm rounded overflow-hidden shadow-lg bg-gray-100">
+            <img class="w-full" src="${recipe.image}" alt="${recipe.name}">
+            <div class="px-6 py-4">
+              <div class="font-bold text-xl mb-2">${recipe.name}</div>
+              <p class="text-gray-700 text-base">
+                ${recipe.steps.join('. ')}
+              </p>
+            </div>
+
+            <!-- Ingredients -->
+            <div class="px-6 pt-4 pb-2">
+              <hr class="mb-2">
+              <h5 class="font-bold text-gray-400 mb-4 uppercase">Ingredients</h5>
+              <!-- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map -->
+              ${recipe.ingredients.map(ingredient => `
+                <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+                  ${ingredient}
+                </span>
+              `).join('')}
+            </div>
+
+            <!-- Nutrient Info -->
+            <div class="px-6 pt-4 pb-2">
+              <hr class="mb-2">
+              <h5 class="font-bold text-md text-gray-400 mb-2 uppercase">Nutrient Info (per 100g)</h5>
+              ${recipe.nutrients ? `
+                <ul class="text-gray-400 text-base">
+                  <li>Calories: ${recipe.nutrients.calories}</li>
+                  <li>Fat: ${recipe.nutrients.fat}</li>
+                  <li>Carbs: ${recipe.nutrients.carbs}</li>
+                  <li>Protein: ${recipe.nutrients.protein}</li>
+                </ul>
+              ` : 'No nutrient information available'}
+
+            </div>
+
+          </div>
+        `;
+        // Append the listItem to the grid container
+			gridContainer.appendChild(listItem);
+      });
+
+      // Append the grid container to the results list
+      resultsList.appendChild(gridContainer);
+    }
+
+    // Define a function to display all recipes
+    function displayAllRecipes() {
+      displayResults(recipies);
+    }
+
+
+    // Display all recipes when the page loads
+    displayAllRecipes();
+
+  </script>
+
+
+</body>
+
+</html>
